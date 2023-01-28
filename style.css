@@ -1,3 +1,61 @@
-body {
-    background-color: rgb(140, 140, 140);
+html {
+    margin: 0;
+    background: linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
 }
+
+body {
+    margin: 0;
+    background: linear-gradient(70deg, #ff6464 40%, #5ac8fa 40%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+#box {
+    display: flex;
+    justify-content: center;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+#secondGrid {
+    margin-left: 5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+
+#p1 {
+    border-color: black;
+    background-color: white;
+    width: 2rem;
+    height: 2rem;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+}
+
+#p2 {
+    border-color: black;
+    background-color: white;
+    width: 2rem;
+    height: 2rem;
+    border-width: 1px;
+    border-style: solid;
+    overflow: hidden;
+}
+
+#p1:hover {opacity: 0.8;}
+#p2:hover {opacity: 0.8;}
