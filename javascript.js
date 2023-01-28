@@ -1,10 +1,11 @@
-const ship = (lengthVal, pointsVal, sunkStat) => {
+const ship = (lengthVal, pointsVal) => {
     let Ship = {
         length: lengthVal,
-        //hit() {points += 1;},
+        hit() {points += 1;},
         points: pointsVal,
-        sunk: sunkStat
+        sunk: false
     };
+    console.log(Ship);
     return Ship;
 };
 
@@ -26,13 +27,13 @@ const gameBoard = () => {
         secondBox.id = 'p2';
         grid.appendChild(box);
         secondGrid.appendChild(secondBox);
+        box.addEventListener('click', () => {
+
+        })
+        secondBox.addEventListener('click', () => {
+
+        })
     }
-    box.addEventListener('click', () => {
-
-    })
-    secondBox.addEventListener('click', () => {
-
-    })
 }
 gameBoard();
 

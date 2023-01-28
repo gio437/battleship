@@ -21,6 +21,18 @@ body {
     margin-bottom: 2rem;
 }
 
+#alph { /* generate the first row of grid with letters? */
+    display: flex;
+    gap: 24px;
+    margin-left: 27px;
+}
+
+#secondAlph {
+    display: flex;
+    gap: 24px;
+    margin-left: 82px;
+}
+
 #box {
     display: flex;
     justify-content: center;
@@ -59,3 +71,28 @@ body {
 
 #p1:hover {opacity: 0.8;}
 #p2:hover {opacity: 0.8;}
+
+#one {
+    margin-top: 8px;
+    margin-bottom: 15px;
+}
+
+#third{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#fith{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#seventh{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#ninth {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
