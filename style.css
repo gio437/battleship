@@ -33,6 +33,10 @@ body {
     margin-left: 82px;
 }
 
+#secondNum {
+    margin-left: 7px;
+}
+
 #box {
     display: flex;
     justify-content: center;
@@ -49,7 +53,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#p1 {
+.p1 {
     border-color: black;
     background-color: white;
     width: 2rem;
@@ -59,7 +63,7 @@ body {
     overflow: hidden;
 }
 
-#p2 {
+.p2 {
     border-color: black;
     background-color: white;
     width: 2rem;
@@ -96,3 +100,43 @@ body {
     margin-top: 15px;
     margin-bottom: 15px;
 }
+
+#ships {
+    border-radius: 4px;
+    background-color:  #5ac8fa;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 14px;
+    padding: 14px;
+    width: 130px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin-top: 2rem;
+    margin-left: 1rem;
+  }
+
+  #ships span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+
+  #ships span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+
+  #ships:hover span {
+    padding-right: 25px;
+  }
+
+  #ships:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
