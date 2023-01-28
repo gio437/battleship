@@ -7,7 +7,7 @@ const createGrid = () => {
         box.id = i;
         secondBox.id = i;
         box.classList.add('p1');
-        secondBox.classList.add('p1');
+        secondBox.classList.add('p2');
         grid.appendChild(box);
         secondGrid.appendChild(secondBox);
     }
@@ -59,16 +59,25 @@ const isSunk = (ship) => {
 
 const gameBoard = () => {
    const placeShip = document.getElementById('ships');
-   placeShip.addEventListener('click', () => {
+   placeShip.addEventListener('click', function getBox() {
         console.log(location);
         let ships = createShip();
         console.log(ships);
         let carrierObj = ships.carrier;
         console.log(carrierObj);
-        let carrierVal = window.prompt('place carrier using coordinates');
-        console.log(carrierVal);
-        return ships;
-     })
+
+        document.querySelectorAll('.p1').forEach(box => {
+            box.addEventListener('click', () => {
+            console.log(box.id);
+            })
+        })
+        document.querySelectorAll('.p2').forEach(box => {
+            box.addEventListener('click', () => {
+            console.log(box.id);
+            })
+        })
+        placeShip.removeEventListener('click', getBox);
+    })
 }
 gameBoard();
 
