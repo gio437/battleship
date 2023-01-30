@@ -1,6 +1,7 @@
 const createShip = require('./javascript').createShip;
 const isSunk = require('./javascript').isSunk;
 const gameBoard = require('./javascript').gameBoard;
+const placeShip = require('./javascript').placeShip;
 test('ship obj creation', () => {
   expect(createShip(2, 1, false)).toStrictEqual({length: 2, points: 1, sunk: false});
 });
@@ -12,6 +13,6 @@ test('ship is sunk', () => {
   expect(isSunk({length: 2, points: 2, sunk: false})).toStrictEqual({length: 2, points: 2, sunk: true});
 });
 
-test('puts ships in coordinates', () => {;
-  expect(gameBoard()).toStrictEqual(ships);
+test('gets ships in coordinates', () => {;
+  expect(placeShip).toStrictEqual(ships);
 });

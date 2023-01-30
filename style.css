@@ -73,8 +73,8 @@ body {
     overflow: hidden;
 }
 
-#p1:hover {opacity: 0.8;}
-#p2:hover {opacity: 0.8;}
+.p1:hover {opacity: 0.8;}
+.p2:hover {opacity: 0.8;}
 
 #one {
     margin-top: 8px;
