@@ -59,24 +59,9 @@ const createShip = () => {
 const gameBoard = () => {
    const placeShipBtn = document.getElementById('ships');
    placeShipBtn.addEventListener('click', function getBox() {
-        document.querySelectorAll('.p1').forEach(box => {
-            box.addEventListener('click', () => {
-                let firstBox = box.id;
-                console.log(firstBox);
-                function endGame() {
-                    let carrier = createShip().carrier;
-                    let battleship = createShip().battleship;
-                    let destroyer = createShip().destroyer;
-                    let submarine = createShip().submarine;
-                    let patroller = createShip().patroller;
-                    if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
-                        console.log('all ships sunk');
-                    }
-                }
-
                 let carrierBoard = {
                     carrier: createShip().carrier,
-                    coordinates: firstBox, //replace with firstBox
+                    coordinates: 100, //replace with firstBox
                     attack: false,
                     missed: 0,
                     receiveAttack() {
@@ -88,11 +73,15 @@ const gameBoard = () => {
                             missed += 1;
                         }
                     },
-                    endGame: endGame()
+                    endGame() {
+                        if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
+                            console.log('all ships sunk');
+                        }
+                    }
                 }
                 let battleshipBoard = {
                     battleship: createShip().battleship,
-                    coordinates: 30,
+                    coordinates: 100,
                     missed: 0,
                     receiveAttack() {
                         if (coordinates.battleship === true) { // add a data attribute determining that there is a ship there?
@@ -102,11 +91,15 @@ const gameBoard = () => {
                             missed += 1;
                         }
                     },
-                    endGame: endGame()
+                    endGame() {
+                        if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
+                            console.log('all ships sunk');
+                        }
+                    }
                 }
                 let destroyerBoard = {
                     destroyer: createShip().destroyer,
-                    coordinates: 30,
+                    coordinates: 100,
                     missed: 0,
                     receiveAttack() {
                         if (coordinates.destroyer === true) { // add a data attribute determining that there is a ship there?
@@ -116,11 +109,15 @@ const gameBoard = () => {
                             missed += 1;
                         }
                     },
-                    endGame: endGame()
+                    endGame() {
+                        if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
+                            console.log('all ships sunk');
+                        }
+                    }
                 }
                 let submarineBoard = {
                     submarine: createShip().submarine,
-                    coordinates: 30,
+                    coordinates: 100,
                     missed: 0,
                     receiveAttack() {
                         if (coordinates.submarine === true) { // add a data attribute determining that there is a ship there?
@@ -130,11 +127,15 @@ const gameBoard = () => {
                             missed += 1;
                         }
                     },
-                    endGame: endGame()
+                    endGame() {
+                        if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
+                            console.log('all ships sunk');
+                        }
+                    }
                 }
                 let patrollerBoard = {
                     patroller: createShip().patroller,
-                    coordinates: 30,
+                    coordinates: 100,
                     missed: 0,
                     receiveAttack() {
                         if (coordinates. patroller === true) { // add a data attribute determining that there is a ship there?
@@ -144,27 +145,72 @@ const gameBoard = () => {
                             missed += 1;
                         }
                     },
-                    endGame: endGame()
+                    endGame() {
+                        if (carrier.sunk === true && battleship.sunk === true && destroyer.sunk === true && submarine.sunk === true && patroller.sunk === true) {
+                            console.log('all ships sunk');
+                        }
+                    }
                 }
                 player({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
+                placeShipBtn.removeEventListener('click', getBox);
             })
-        })
-        placeShipBtn.removeEventListener('click', getBox);
-    })
 }
 gameBoard();
 
+let usedCoords = [];
 const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
-    let coords = document.getElementById(carrierBoard.coordinates);
-    coords.style.backgroundColor = 'black';
-    console.log(carrierBoard);
+    document.querySelectorAll('.p1').forEach(box => {
+    box.addEventListener('click', () => {
+        let firstBox = box.id;
+        parseInt(firstBox);
+        console.log(firstBox);
 
-    document.querySelectorAll('.p2').forEach(box => {
-        box.addEventListener('click', () => {
-            let secondBox = box.id;
-            console.log(secondBox);
+        if (carrierBoard.coordinates === 100) {
+            carrierBoard.coordinates = firstBox;
+            let carrierCoords = document.getElementById(carrierBoard.coordinates);
+            carrierCoords.style.backgroundColor = 'black';
+            console.log(carrierBoard);
+            usedCoords.push(firstBox);
+            console.log(usedCoords);
+        }
+        else if (battleshipBoard.coordinates === 100 && usedCoords[0] && firstBox != usedCoords[0]) {
+            console.log(usedCoords[0]);
+            battleshipBoard.coordinates = firstBox;
+            let coords = document.getElementById(battleshipBoard.coordinates);
+            coords.style.backgroundColor = 'black';
+            console.log(battleshipBoard);
+            usedCoords.push(firstBox);
+        }
+        else if (destroyerBoard.coordinates === 100 && usedCoords[1] && firstBox != usedCoords[1]) {
+            destroyerBoard.coordinates = firstBox;
+            let coords = document.getElementById(destroyerBoard.coordinates);
+            coords.style.backgroundColor = 'black';
+            console.log(destroyerBoard);
+            usedCoords.push(firstBox);
+        }
+        else if (submarineBoard.coordinates === 100 && usedCoords[2] && firstBox != usedCoords[2]) {
+            submarineBoard.coordinates = firstBox;
+            let coords = document.getElementById(submarineBoard.coordinates);
+            coords.style.backgroundColor = 'black';
+            console.log(submarineBoard);
+            usedCoords.push(firstBox);
+        }
+        else if (patrollerBoard.coordinates === 100 && usedCoords[3] && firstBox != usedCoords[3]) {
+            patrollerBoard.coordinates = firstBox;
+            let coords = document.getElementById(patrollerBoard.coordinates);
+            coords.style.backgroundColor = 'black';
+            console.log(patrollerBoard);
+            usedCoords.push(firstBox);
+        }
+
+        document.querySelectorAll('.p2').forEach(box => {
+            box.addEventListener('click', () => {
+                let secondBox = box.id;
+                console.log(secondBox);
 
 
+                }
+            )})
         })
     })
 }
