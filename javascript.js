@@ -239,9 +239,12 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             coords.style.backgroundColor = 'black';
             coords = document.getElementById(submarineBoard.coordinates + 1);
             coords.style.backgroundColor = 'black';
+            coords = document.getElementById(submarineBoard.coordinates + 2);
+            coords.style.backgroundColor = 'black';
             console.log(submarineBoard);
             usedCoords.push(firstBox);
             usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
+            usedCoords.push(parseInt(submarineBoard.coordinates) + 2);
             console.log(usedCoords);
             placed++;
         }
@@ -250,8 +253,11 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             patrollerBoard.placed = true;
             let coords = document.getElementById(patrollerBoard.coordinates);
             coords.style.backgroundColor = 'black';
+            coords = document.getElementById(patrollerBoard.coordinates + 1);
+            coords.style.backgroundColor = 'black';
             console.log(patrollerBoard);
             usedCoords.push(firstBox);
+            usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
             console.log(usedCoords);
             enemyShips([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]);
             attackBoard({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
@@ -260,35 +266,41 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
     })
 }
 
-//let cpuUsedCoords = [];
+let enemyPlacedVal = 0;
+let ships = createShip();
+let shipArr = [ships.carrier, ships.battleship, ships.destroyer, ships.submarine, ships.patroller];
+let cpuUsedCoords = [];
 const enemyShips = () => {
-        let ships = createShip();
-        let shipArr = [ships.carrier, ships.battleship, ships.destroyer, ships.submarine, ships.patroller];
-        shipArr.forEach( () => {
-            const randomShip = Math.floor(Math.random() * shipArr.length);
-            const randomShipVal = shipArr[randomShip];
-            console.log(randomShipVal);
+        while (enemyPlacedVal < 5) {
+            // const randomShip = Math.floor(Math.random() * shipArr.length);
+            // const randomShipVal = shipArr[randomShip];
+            // console.log(randomShipVal);
 
-            const randomBoxVal = Math.floor(Math.random() * (200 - 100 + 1) + 100);
+            const randomBoxVal = Math.floor(Math.random() * (199 - 100 + 1) + 100);
             console.log(randomBoxVal);
-            randomShipVal.coordinates = [];
-            validateEnemyShips(randomShipVal, randomBoxVal);
-        })
+            //ship.coordinates = [];
+            validateEnemyShips(shipArr[enemyPlacedVal], randomBoxVal);
+        }
 }
 
-const validateEnemyShips = (randomShipVal, randomBoxVal) => {
-    if (isValidShipSelect(randomShipVal, randomBoxVal)) {
-        for (let i = 0; i < randomShipVal.length; i++) { // now put coords into seperate boxes
-            randomShipVal.coordinates.push(randomBoxVal + i);
-            let box = document.getElementById(randomBoxVal);
-            box.append(randomShipVal.coordinates);
+
+const validateEnemyShips = (ship, randomBoxVal) => {
+    if (isValidShipSelect(ship, randomBoxVal) && enemyPlacedVal < 5) {
+        for (let i = 0; i < ship.length; i++) { // now put coords into seperate boxes
+            //ship.coordinates.push(randomBoxVal + i);
+            cpuUsedCoords.push(randomBoxVal + i);
+            console.log(cpuUsedCoords);
+            let box = document.getElementById(randomBoxVal + i);
+            box.style.backgroundColor = 'black';
+            //box.append(ship.coordinates);
         }
+        enemyPlacedVal++;
+        console.log(shipArr);
+        //shipArr.splice(ship, 1); // use arr.prototype for a copy?
     }
-    else {
-        enemyShips();
-    }
-    console.log(randomShipVal.coordinates);
-    console.log(randomShipVal.length);
+    else {enemyShips();}
+
+
 }
 
 const attackBoard = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
@@ -310,7 +322,7 @@ const attackBoard = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
 const cpuMove = () => {
     document.querySelectorAll('.p1').forEach(box => {
-        const randomBoxVal = Math.floor(Math.random() * (200 - 0 + 100) + 0);
+        const randomBoxVal = Math.floor(Math.random() * (199 - 0 + 100) + 0);
         console.log(randomBoxVal);
     })
 }
@@ -320,7 +332,7 @@ const cpuMove = () => {
 const isValidShipSelect = (ship, box) => {
     let placedId = box;
     for (let i = 0; i < ship.length; i++) {
-        if (usedCoords.includes(box) || 10 - (placedId % 10) < ship.length) {
+        if (usedCoords.includes(box) || cpuUsedCoords.includes(box) || 10 - (placedId % 10) < ship.length) {
             return false;
         }
         box++;
