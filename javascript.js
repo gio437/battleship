@@ -52,7 +52,7 @@ const createShip = () => {
         points: 0,
         sunk: false,
         hit: function () {patroller.points += 1;},
-        isSunk() {patroller.points >= patroller.length ? true : false}
+        isSunk() {patroller.points >= patroller.length ? patroller.sunk = true : false}
     };
     let ships = {carrier, battleship, destroyer, submarine, patroller};
     return ships;
