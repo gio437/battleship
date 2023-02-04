@@ -226,6 +226,7 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
             console.log(usedCoords);
             placedShip++;
+            storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
             enemyShips();
         }
         })
@@ -345,18 +346,106 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
                 //return?
                 //box.removeEventListener()
             //}
-            cpuMove();
+            cpuMove(playerArr[0], playerArr[1], playerArr[2], playerArr[3], playerArr[4]);
         }
     )})
 }
 
-const cpuMove = () => {
+let playerArr = [];
+const storePlayerObj = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
+    this.carrierBoard = carrierBoard;
+    this.battleshipBoard = battleshipBoard;
+    this.destroyerBoard = destroyerBoard;
+    this.submarineBoard = submarineBoard;
+    this.patrollerBoard = patrollerBoard;
+
+    playerArr.push(carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard);
+    console.log(playerArr);
+}
+
+const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard) => {
     const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
     console.log(randomBoxVal);
-
+    console.log(carrierBoard);
     let selectedBox = document.querySelector(`.p1[id='${randomBoxVal}']`);
-    console.log(selectedBox);
-    //selectedBox.click();
+    selectedBox.addEventListener('click', function clickBox() {
+        console.log(selectedBox);
+        selectedBox = parseInt(selectedBox.id);
+        this.removeEventListener('click', clickBox);
+
+        if (usedCoords.includes(selectedBox)) {
+            console.log('hello');
+            // let shipBoards = gameBoard();
+            // shipBoards.carrierBoard = carrierBoard;
+            // shipBoards.battleshipBoard = battleshipBoard;
+            // shipBoards.destroyerBoard = destroyerBoard;
+            // shipBoards.submarineBoard = submarineBoard;
+            // shipBoards.patrollerBoard = patrollerBoard;
+
+            if (selectedBox === usedCoords[0] || selectedBox === usedCoords[1] || selectedBox === usedCoords[2] || selectedBox === usedCoords[3] || selectedBox === usedCoords[4]) {
+                battleshipBoard.missed += 1;
+                destroyerBoard.missed += 1;
+                submarineBoard.missed += 1;
+                patrollerBoard.missed += 1;
+
+                carrierBoard.receiveAttack();
+                carrierBoard.endGame();
+            }
+            else if (selectedBox === usedCoords[5] || selectedBox === usedCoords[6] || selectedBox === usedCoords[7] || selectedBox === usedCoords[8]) {
+                carrierBoard.missed += 1;
+                destroyerBoard.missed += 1;
+                submarineBoard.missed += 1;
+                patrollerBoard.missed += 1;
+                console.log(battleshipBoard);
+
+                battleshipBoard.receiveAttack();
+                battleshipBoard.endGame();
+            }
+            else if (selectedBox === usedCoords[9] || selectedBox === usedCoords[10] || selectedBox === usedCoords[11]) {
+                carrierBoard.missed += 1;
+                battleshipBoard.miseed += 1;
+                submarineBoard.missed += 1;
+                patrollerBoard.missed += 1;
+                console.log(destroyerBoard);
+
+                destroyerBoard.receiveAttack();
+                destroyerBoard.endGame();
+            }
+            else if (selectedBox === usedCoords[12] || selectedBox === usedCoords[13] || selectedBox === usedCoords[14]) {
+                carrierBoard.missed += 1;
+                destroyerBoard.missed += 1;
+                battleshipBoard.missed += 1;
+                patrollerBoard.missed += 1;
+                console.log(submarineBoard);
+
+                submarineBoard.receiveAttack();
+                submarineBoard.endGame();
+            }
+            else if (selectedBox  === cpuUsedCoords[15] || selectedBox  === cpuUsedCoords[16]) {
+                carrierBoard.missed += 1;
+                battleshipBoard.missed += 1;
+                destroyerBoard.missed += 1;
+                submarineBoard.missed += 1;
+                console.log(submarineBoard);
+
+                patrollerBoard.receiveAttack();
+                patrollerBoard.endGame();
+            }
+            else {
+                carrierBoard.missed += 1;
+                battleshipBoard.missed += 1;
+                destroyerBoard.missed += 1;
+                submarineBoard.missed += 1;
+                patrollerBoard.missed += 1;
+                console.log(carrierBoard);
+                console.log(battleshipBoard);
+                console.log(destroyerBoard);
+                console.log(submarineBoard);
+                console.log(patrollerBoard);
+            }
+        }
+    })
+    selectedBox.click();
 }
 
 
