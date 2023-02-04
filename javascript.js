@@ -132,7 +132,7 @@ let usedCoords = [];
 let placedShip = 0;
 const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
     document.querySelectorAll('.p1').forEach(box => {
-    box.addEventListener('click', () => {
+    box.addEventListener('click', function placePlayerShip() {
         let firstBox = parseInt(box.id);
         console.log(firstBox);
         let ship = createShip();
@@ -228,10 +228,10 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             placedShip++;
             storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
             enemyShips();
+            box.removeEventListener('click', placePlayerShip);
         }
-        })
+      })
     })
-
 }
 
 let enemyPlacedVal = 0;
@@ -281,6 +281,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
             console.log(cpuUsedCoords);
             this.removeEventListener('click', getBox); // removes the clicked box eventListener
 
+            let hitBox = document.getElementById(secondBox);
             if (secondBox === cpuUsedCoords[0] || secondBox === cpuUsedCoords[1] || secondBox === cpuUsedCoords[2] || secondBox === cpuUsedCoords[3] || secondBox === cpuUsedCoords[4]) {
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
@@ -289,6 +290,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
                 carrierBoard.receiveAttack();
                 carrierBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (secondBox === cpuUsedCoords[5] || secondBox === cpuUsedCoords[6] || secondBox === cpuUsedCoords[7] || secondBox === cpuUsedCoords[8]) {
                 carrierBoard.missed += 1;
@@ -299,6 +301,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
                 battleshipBoard.receiveAttack();
                 battleshipBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (secondBox === cpuUsedCoords[9] || secondBox === cpuUsedCoords[10] || secondBox === cpuUsedCoords[11]) {
                 carrierBoard.missed += 1;
@@ -309,6 +312,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
                 destroyerBoard.receiveAttack();
                 destroyerBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (secondBox === cpuUsedCoords[12] || secondBox === cpuUsedCoords[13] || secondBox === cpuUsedCoords[14]) {
                 carrierBoard.missed += 1;
@@ -319,6 +323,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
                 submarineBoard.receiveAttack();
                 submarineBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (secondBox === cpuUsedCoords[15] || secondBox === cpuUsedCoords[16]) {
                 carrierBoard.missed += 1;
@@ -329,6 +334,7 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
 
                 patrollerBoard.receiveAttack();
                 patrollerBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else {
                 carrierBoard.missed += 1;
@@ -341,6 +347,9 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
                 console.log(destroyerBoard);
                 console.log(submarineBoard);
                 console.log(patrollerBoard);
+
+                let missedBox = document.getElementById(secondBox);
+                missedBox.style.backgroundColor = 'red';
             }
              // if (endGameVal === 1) {
                 //return?
@@ -362,7 +371,7 @@ const storePlayerObj = ({carrierBoard, battleshipBoard, destroyerBoard, submarin
     playerArr.push(carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard);
     console.log(playerArr);
 }
-
+// fix: default objects always called in
 const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard) => {
     const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
     console.log(randomBoxVal);
@@ -374,14 +383,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
         this.removeEventListener('click', clickBox);
 
         if (usedCoords.includes(selectedBox)) {
-            console.log('hello');
-            // let shipBoards = gameBoard();
-            // shipBoards.carrierBoard = carrierBoard;
-            // shipBoards.battleshipBoard = battleshipBoard;
-            // shipBoards.destroyerBoard = destroyerBoard;
-            // shipBoards.submarineBoard = submarineBoard;
-            // shipBoards.patrollerBoard = patrollerBoard;
-
+            console.log('cpu hit');
             if (selectedBox === usedCoords[0] || selectedBox === usedCoords[1] || selectedBox === usedCoords[2] || selectedBox === usedCoords[3] || selectedBox === usedCoords[4]) {
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
@@ -421,7 +423,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
                 submarineBoard.receiveAttack();
                 submarineBoard.endGame();
             }
-            else if (selectedBox  === cpuUsedCoords[15] || selectedBox  === cpuUsedCoords[16]) {
+            else if (selectedBox === cpuUsedCoords[15] || selectedBox === cpuUsedCoords[16]) {
                 carrierBoard.missed += 1;
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
@@ -442,6 +444,9 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
                 console.log(destroyerBoard);
                 console.log(submarineBoard);
                 console.log(patrollerBoard);
+
+                let missedBox = document.getElementById(selectedBox);
+                missedBox.style.backgroundColor = 'red';
             }
         }
     })
