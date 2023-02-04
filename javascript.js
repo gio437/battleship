@@ -24,35 +24,35 @@ const createShip = () => {
         points: 0,
         sunk: false,
         hit: function () {carrier.points += 1;},
-        isSunk() {carrier.points === carrier.length ? carrier.sunk = true : false},
+        isSunk() {carrier.points >= carrier.length ? carrier.sunk = true : false},
     };
     let battleship = {
         length: 4,
         points: 0,
         sunk: false,
         hit: function () {battleship.points += 1;},
-        isSunk() {battleship.points === battleship.length ? battleship.sunk = true : false},
+        isSunk() {battleship.points >= battleship.length ? battleship.sunk = true : false},
     };
     let destroyer = {
         length: 3,
         points: 0,
         sunk: false,
         hit: function () {destroyer.points += 1},
-        isSunk() {destroyer.points === destroyer.length ? destroyer.sunk = true : false}
+        isSunk() {destroyer.points >= destroyer.length ? destroyer.sunk = true : false}
     };
     let submarine = {
         length: 3,
         points: 0,
         sunk: false,
         hit: function () {submarine.points += 1;},
-        isSunk() {submarine.points === submarine.length ? submarine.sunk = true : false}
+        isSunk() {submarine.points >= submarine.length ? submarine.sunk = true : false}
     };
     let patroller = {
         length: 2,
         points: 0,
         sunk: false,
         hit: function () {patroller.points += 1;},
-        isSunk() {patroller.points === patroller.length ? true : false}
+        isSunk() {patroller.points >= patroller.length ? true : false}
     };
     let ships = {carrier, battleship, destroyer, submarine, patroller};
     return ships;
@@ -311,8 +311,8 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
             }
             else if (secondBox === cpuUsedCoords[12] || secondBox === cpuUsedCoords[13] || secondBox === cpuUsedCoords[14]) {
                 carrierBoard.missed += 1;
-                destroyerBoard += 1;
-                battleshipBoard += 1;
+                destroyerBoard.missed += 1;
+                battleshipBoard.missed += 1;
                 patrollerBoard.missed += 1;
                 console.log(submarineBoard);
 
