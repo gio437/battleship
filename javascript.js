@@ -129,7 +129,7 @@ const placeShipBtn = document.getElementById('ships');
 placeShipBtn.addEventListener('click', gameBoard);
 
 let usedCoords = [];
-let placed = 0;
+let placedShip = 0;
 const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
     document.querySelectorAll('.p1').forEach(box => {
     box.addEventListener('click', () => {
@@ -140,7 +140,7 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 // check if box is occupied by looping through list of used coordinates
 // also need to find a solution to make sure that boxes in the unclicked area aren't filled
 
-        if (carrierBoard.placed === false && isValidShipSelect(ship.carrier, firstBox)) {
+        if (carrierBoard.placed === false && placedShip === 0 && isValidShipSelect(ship.carrier, firstBox)) {
             carrierBoard.coordinates = firstBox;
             carrierBoard.placed = true;
             let carrierCoords = document.getElementById(carrierBoard.coordinates);
@@ -160,9 +160,9 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(parseInt(carrierBoard.coordinates) + 3);
             usedCoords.push(parseInt(carrierBoard.coordinates) + 4);
             console.log(usedCoords);
-            placed++;
+            placedShip++;
         }
-        else if (battleshipBoard.placed === false && placed === 1 && isValidShipSelect(ship.battleship, firstBox)) {
+        else if (battleshipBoard.placed === false && placedShip === 1 && isValidShipSelect(ship.battleship, firstBox)) {
             console.log(usedCoords[0]);
             battleshipBoard.coordinates = firstBox;
             battleshipBoard.placed = true;
@@ -180,9 +180,9 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(parseInt(battleshipBoard.coordinates) + 2);
             usedCoords.push(parseInt(battleshipBoard.coordinates) + 3);
             console.log(usedCoords);
-            placed++;
+            placedShip++;
         }
-        else if (destroyerBoard.placed === false && placed === 2 && isValidShipSelect(ship.destroyer, firstBox)) {
+        else if (destroyerBoard.placed === false && placedShip === 2 && isValidShipSelect(ship.destroyer, firstBox)) {
             destroyerBoard.coordinates = firstBox;
             destroyerBoard.placed = true;
             let coords = document.getElementById(destroyerBoard.coordinates);
@@ -196,9 +196,9 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(parseInt(destroyerBoard.coordinates) + 1);
             usedCoords.push(parseInt(destroyerBoard.coordinates) + 2);
             console.log(usedCoords);
-            placed++;
+            placedShip++;
         }
-        else if (submarineBoard.placed === false && placed === 3 && isValidShipSelect(ship.submarine, firstBox)) {
+        else if (submarineBoard.placed === false && placedShip === 3 && isValidShipSelect(ship.submarine, firstBox)) {
             submarineBoard.coordinates = firstBox;
             submarineBoard.placed = true;
             let coords = document.getElementById(submarineBoard.coordinates);
@@ -212,9 +212,9 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
             usedCoords.push(parseInt(submarineBoard.coordinates) + 2);
             console.log(usedCoords);
-            placed++;
+            placedShip++;
         }
-        else if (patrollerBoard.placed === false && placed === 4 && isValidShipSelect(ship.patroller, firstBox)) {
+        else if (patrollerBoard.placed === false && placedShip === 4 && isValidShipSelect(ship.patroller, firstBox)) {
             patrollerBoard.coordinates = firstBox;
             patrollerBoard.placed = true;
             let coords = document.getElementById(patrollerBoard.coordinates);
@@ -225,6 +225,7 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             usedCoords.push(firstBox);
             usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
             console.log(usedCoords);
+            placedShip++;
             enemyShips();
         }
         })
@@ -273,12 +274,11 @@ const validateEnemyShips = (ship, randomBoxVal) => {
 
 const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]) => {
     document.querySelectorAll('.p2').forEach(box => {
-        box.addEventListener('click', () => {
+        box.addEventListener('click', function getBox() {
             let secondBox = parseInt(box.id);
             console.log(secondBox);
             console.log(cpuUsedCoords);
-
-            //let shipBoards = new createEnemyBoards();
+            this.removeEventListener('click', getBox); // removes the clicked box eventListener
 
             if (secondBox === cpuUsedCoords[0] || secondBox === cpuUsedCoords[1] || secondBox === cpuUsedCoords[2] || secondBox === cpuUsedCoords[3] || secondBox === cpuUsedCoords[4]) {
                 battleshipBoard.missed += 1;
@@ -345,16 +345,18 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
                 //return?
                 //box.removeEventListener()
             //}
+            cpuMove();
         }
-        //cpuMove();
     )})
 }
 
 const cpuMove = () => {
-    document.querySelectorAll('.p1').forEach(box => {
-        const randomBoxVal = Math.floor(Math.random() * (199 - 0 + 100) + 0);
-        console.log(randomBoxVal);
-    })
+    const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
+    console.log(randomBoxVal);
+
+    let selectedBox = document.querySelector(`.p1[id='${randomBoxVal}']`);
+    console.log(selectedBox);
+    //selectedBox.click();
 }
 
 
