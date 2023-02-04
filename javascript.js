@@ -228,7 +228,8 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             placedShip++;
             storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
             enemyShips();
-            box.removeEventListener('click', placePlayerShip);
+            const newElement = box.cloneNode(true);
+            box.parentNode.replaceChild(newElement, box);
         }
       })
     })
@@ -348,14 +349,22 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
                 console.log(submarineBoard);
                 console.log(patrollerBoard);
 
-                let missedBox = document.getElementById(secondBox);
-                missedBox.style.backgroundColor = 'red';
+                hitBox.style.backgroundColor = 'red';
             }
              // if (endGameVal === 1) {
                 //return?
                 //box.removeEventListener()
             //}
-            cpuMove(playerArr[0], playerArr[1], playerArr[2], playerArr[3], playerArr[4]);
+            if (passedObj === 0) {
+                let shipBoards = gameBoard();
+                let newCarrier = shipBoards.carrierBoard;
+                let newBattleship = shipBoards.battleshipBoard;
+                let newDestroyer = shipBoards.destroyerBoard;
+                let newSubmarine = shipBoards.submarineBoard;
+                let newPatroller = shipBoards.patrollerBoard;
+                cpuMove(newCarrier, newBattleship, newDestroyer, newSubmarine, newPatroller);
+            }
+            else {cpuMove();}
         }
     )})
 }
@@ -372,7 +381,9 @@ const storePlayerObj = ({carrierBoard, battleshipBoard, destroyerBoard, submarin
     console.log(playerArr);
 }
 // fix: default objects always called in
-const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard) => {
+let passedObj = 0;
+const cpuMove = () => {
+    passedObj = 1;
     const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
     console.log(randomBoxVal);
     console.log(carrierBoard);
@@ -382,8 +393,8 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
         selectedBox = parseInt(selectedBox.id);
         this.removeEventListener('click', clickBox);
 
-        if (usedCoords.includes(selectedBox)) {
-            console.log('cpu hit');
+        let hitBox = document.getElementById(selectedBox);
+        console.log('cpu hit');
             if (selectedBox === usedCoords[0] || selectedBox === usedCoords[1] || selectedBox === usedCoords[2] || selectedBox === usedCoords[3] || selectedBox === usedCoords[4]) {
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
@@ -392,6 +403,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 
                 carrierBoard.receiveAttack();
                 carrierBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (selectedBox === usedCoords[5] || selectedBox === usedCoords[6] || selectedBox === usedCoords[7] || selectedBox === usedCoords[8]) {
                 carrierBoard.missed += 1;
@@ -402,6 +414,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 
                 battleshipBoard.receiveAttack();
                 battleshipBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (selectedBox === usedCoords[9] || selectedBox === usedCoords[10] || selectedBox === usedCoords[11]) {
                 carrierBoard.missed += 1;
@@ -412,6 +425,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 
                 destroyerBoard.receiveAttack();
                 destroyerBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (selectedBox === usedCoords[12] || selectedBox === usedCoords[13] || selectedBox === usedCoords[14]) {
                 carrierBoard.missed += 1;
@@ -422,6 +436,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 
                 submarineBoard.receiveAttack();
                 submarineBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else if (selectedBox === cpuUsedCoords[15] || selectedBox === cpuUsedCoords[16]) {
                 carrierBoard.missed += 1;
@@ -432,6 +447,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 
                 patrollerBoard.receiveAttack();
                 patrollerBoard.endGame();
+                hitBox.style.backgroundColor = 'green';
             }
             else {
                 carrierBoard.missed += 1;
@@ -445,9 +461,7 @@ const cpuMove = (carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
                 console.log(submarineBoard);
                 console.log(patrollerBoard);
 
-                let missedBox = document.getElementById(selectedBox);
-                missedBox.style.backgroundColor = 'red';
-            }
+                hitBox.style.backgroundColor = 'red';
         }
     })
     selectedBox.click();
