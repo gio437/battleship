@@ -2,14 +2,14 @@
 // if id modul 11 = 10, then make box class invisible || id is less than 11
 const createGrid = () => {
     for (let i = 0; i < 100; i++) {
-        const grid = document.getElementById('grid');
+        const grid = document.querySelector('.grid');
         const box = document.createElement('div');
         box.id = i;
         box.classList.add('p1');
         grid.appendChild(box);
     }
     for (let i = 100; i < 200; i++) {
-        const secondGrid = document.getElementById('secondGrid');
+        const secondGrid = document.querySelector('.secondGrid');
         const secondBox = document.createElement('div');
         secondBox.id = i;
         secondBox.classList.add('p2');
@@ -58,6 +58,7 @@ const createShip = () => {
     return ships;
 };
 
+let playerCompleted = 0;
 const gameBoard = () => {
             let ships = createShip();
                 let carrierBoard = {
@@ -68,6 +69,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.carrier.hit(); ships.carrier.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
+                            playerCompleted = 0;
+                            usedCoords = [];
+                            placedShip = 0;
+                            enemyPlacedVal = 0;
+                            cpuUsedCoords = [];
+                            passedObj = 0;
+                            usedCpuMoves = [];
+                            playerArr = [];
+                            activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -80,6 +90,15 @@ const gameBoard = () => {
                     receiveAttack: function (){ships.battleship.hit(); ships.battleship.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
+                            playerCompleted = 0;
+                            usedCoords = [];
+                            placedShip = 0;
+                            enemyPlacedVal = 0;
+                            cpuUsedCoords = [];
+                            passedObj = 0;
+                            usedCpuMoves = [];
+                            playerArr = [];
+                            activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -92,6 +111,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.destroyer.hit(); ships.destroyer.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
+                            playerCompleted = 0;
+                            usedCoords = [];
+                            placedShip = 0;
+                            enemyPlacedVal = 0;
+                            cpuUsedCoords = [];
+                            passedObj = 0;
+                            usedCpuMoves = [];
+                            playerArr = [];
+                            activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -104,6 +132,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.submarine.hit(); ships.submarine.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
+                            playerCompleted = 0;
+                            usedCoords = [];
+                            placedShip = 0;
+                            enemyPlacedVal = 0;
+                            cpuUsedCoords = [];
+                            passedObj = 0;
+                            usedCpuMoves = [];
+                            playerArr = [];
+                            activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -116,17 +153,33 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.patroller.hit(); ships.patroller.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
+                            playerCompleted = 0;
+                            usedCoords = [];
+                            placedShip = 0;
+                            enemyPlacedVal = 0;
+                            cpuUsedCoords = [];
+                            passedObj = 0;
+                            usedCpuMoves = [];
+                            playerArr = [];
+                            activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
                 }
+                const placeShipBtn = document.getElementById('ships');
                 placeShipBtn.removeEventListener('click', gameBoard);
-                player({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
+                if (playerCompleted === 0) {
+                    player({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
+                }
+                playerCompleted = 1;
                 return {carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard};
 }
 
-const placeShipBtn = document.getElementById('ships');
-placeShipBtn.addEventListener('click', gameBoard);
+const activateShipBtn = () => {
+    const placeShipBtn = document.getElementById('ships');
+    placeShipBtn.addEventListener('click', gameBoard);
+}
+activateShipBtn();
 
 let usedCoords = [];
 let placedShip = 0;
@@ -139,7 +192,6 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
 // click new box
 // check if box is occupied by looping through list of used coordinates
 // also need to find a solution to make sure that boxes in the unclicked area aren't filled
-
         if (carrierBoard.placed === false && placedShip === 0 && isValidShipSelect(ship.carrier, firstBox)) {
             carrierBoard.coordinates = firstBox;
             carrierBoard.placed = true;
@@ -228,8 +280,6 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             placedShip++;
             storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
             enemyShips();
-            const newElement = box.cloneNode(true);
-            box.parentNode.replaceChild(newElement, box);
         }
       })
     })
@@ -275,12 +325,25 @@ const validateEnemyShips = (ship, randomBoxVal) => {
 }
 
 const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]) => {
-    document.querySelectorAll('.p2').forEach(box => {
-        box.addEventListener('click', function getBox() {
+     document.querySelectorAll('.p2').forEach(box => {
+         box.addEventListener('click', function runBox() {
+             getBox([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box);
+             this.removeEventListener('click', runBox); // removes the clicked box eventListener
+          })
+     })
+
+    // let grid = document.querySelector('.secondGrid');
+    // grid.addEventListener('click', (e) => {
+    //     getBox(e, [carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]);
+    // })
+}
+
+const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box) => {
+            //box = e.target;
             let secondBox = parseInt(box.id);
             console.log(secondBox);
             console.log(cpuUsedCoords);
-            this.removeEventListener('click', getBox); // removes the clicked box eventListener
+
 
             let hitBox = document.getElementById(secondBox);
             if (secondBox === cpuUsedCoords[0] || secondBox === cpuUsedCoords[1] || secondBox === cpuUsedCoords[2] || secondBox === cpuUsedCoords[3] || secondBox === cpuUsedCoords[4]) {
@@ -355,18 +418,22 @@ const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBo
                 //return?
                 //box.removeEventListener()
             //}
-            if (passedObj === 0) {
-                let shipBoards = gameBoard();
-                let newCarrier = shipBoards.carrierBoard;
-                let newBattleship = shipBoards.battleshipBoard;
-                let newDestroyer = shipBoards.destroyerBoard;
-                let newSubmarine = shipBoards.submarineBoard;
-                let newPatroller = shipBoards.patrollerBoard;
-                cpuMove(newCarrier, newBattleship, newDestroyer, newSubmarine, newPatroller);
-            }
-            else {cpuMove();}
-        }
-    )})
+            makeMove();
+}
+
+
+const makeMove = () => {
+    // if (passedObj === 0) {
+    //     let shipBoards = gameBoard();
+    //     let newCarrier = shipBoards.carrierBoard;
+    //     let newBattleship = shipBoards.battleshipBoard;
+    //     let newDestroyer = shipBoards.destroyerBoard;
+    //     let newSubmarine = shipBoards.submarineBoard;
+    //     let newPatroller = shipBoards.patrollerBoard;
+    //     cpuMove(newCarrier, newBattleship, newDestroyer, newSubmarine, newPatroller);
+    // }
+    // else {cpuMove();} // the issue is it being called here repeately
+    cpuMove();
 }
 
 let playerArr = [];
@@ -382,6 +449,7 @@ const storePlayerObj = ({carrierBoard, battleshipBoard, destroyerBoard, submarin
 }
 // fix: default objects always called in
 let passedObj = 0;
+let usedCpuMoves = [];
 const cpuMove = () => {
     passedObj = 1;
     const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
@@ -390,17 +458,22 @@ const cpuMove = () => {
     let selectedBox = document.querySelector(`.p1[id='${randomBoxVal}']`);
     selectedBox.addEventListener('click', function clickBox() {
         console.log(selectedBox);
+        selectedBox.removeEventListener('click', clickBox);
         selectedBox = parseInt(selectedBox.id);
-        this.removeEventListener('click', clickBox);
+        if (usedCpuMoves.includes(selectedBox)) {
+            cpuMove();
+            return;
+        }
+        usedCpuMoves.push(selectedBox);
 
         let hitBox = document.getElementById(selectedBox);
-        console.log('cpu hit');
             if (selectedBox === usedCoords[0] || selectedBox === usedCoords[1] || selectedBox === usedCoords[2] || selectedBox === usedCoords[3] || selectedBox === usedCoords[4]) {
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
                 submarineBoard.missed += 1;
                 patrollerBoard.missed += 1;
 
+                console.log('cpu hit');
                 carrierBoard.receiveAttack();
                 carrierBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
@@ -412,6 +485,7 @@ const cpuMove = () => {
                 patrollerBoard.missed += 1;
                 console.log(battleshipBoard);
 
+                console.log('cpu hit');
                 battleshipBoard.receiveAttack();
                 battleshipBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
@@ -423,6 +497,7 @@ const cpuMove = () => {
                 patrollerBoard.missed += 1;
                 console.log(destroyerBoard);
 
+                console.log('cpu hit');
                 destroyerBoard.receiveAttack();
                 destroyerBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
@@ -434,6 +509,7 @@ const cpuMove = () => {
                 patrollerBoard.missed += 1;
                 console.log(submarineBoard);
 
+                console.log('cpu hit');
                 submarineBoard.receiveAttack();
                 submarineBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
@@ -445,6 +521,7 @@ const cpuMove = () => {
                 submarineBoard.missed += 1;
                 console.log(submarineBoard);
 
+                console.log('cpu hit');
                 patrollerBoard.receiveAttack();
                 patrollerBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
@@ -461,6 +538,7 @@ const cpuMove = () => {
                 console.log(submarineBoard);
                 console.log(patrollerBoard);
 
+                console.log('cpu miss');
                 hitBox.style.backgroundColor = 'red';
         }
     })

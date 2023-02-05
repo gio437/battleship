@@ -42,12 +42,12 @@ body {
     justify-content: center;
 }
 
-#grid {
+.grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-#secondGrid {
+.secondGrid {
     margin-left: 5rem;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
