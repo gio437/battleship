@@ -295,12 +295,13 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             coords.style.backgroundColor = 'black';
             console.log(patrollerBoard);
             usedCoords.push(firstBox);
-            usedCoords.push(parseInt(submarineBoard.coordinates) + 1);
+            usedCoords.push(parseInt(patrollerBoard.coordinates) + 1);
             console.log(usedCoords);
             placedShip++;
-            storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
-            enemyShips();
-
+            if (passedObj === 0) {
+                storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
+                enemyShips();
+            }
         }
     })
     }
