@@ -69,15 +69,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.carrier.hit(); ships.carrier.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
-                            playerCompleted = 0;
-                            usedCoords = [];
-                            placedShip = 0;
-                            enemyPlacedVal = 0;
-                            cpuUsedCoords = [];
-                            passedObj = 0;
-                            usedCpuMoves = [];
-                            playerArr = [];
-                            activateShipBtn();
+                            // playerCompleted = 0;
+                            // usedCoords = [];
+                            // placedShip = 0;
+                            // enemyPlacedVal = 0;
+                            // cpuUsedCoords = [];
+                            // passedObj = 0;
+                            // usedCpuMoves = [];
+                            // playerArr = [];
+                            // activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -90,15 +90,15 @@ const gameBoard = () => {
                     receiveAttack: function (){ships.battleship.hit(); ships.battleship.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
-                            playerCompleted = 0;
-                            usedCoords = [];
-                            placedShip = 0;
-                            enemyPlacedVal = 0;
-                            cpuUsedCoords = [];
-                            passedObj = 0;
-                            usedCpuMoves = [];
-                            playerArr = [];
-                            activateShipBtn();
+                            // playerCompleted = 0;
+                            // usedCoords = [];
+                            // placedShip = 0;
+                            // enemyPlacedVal = 0;
+                            // cpuUsedCoords = [];
+                            // passedObj = 0;
+                            // usedCpuMoves = [];
+                            // playerArr = [];
+                            // activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -111,15 +111,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.destroyer.hit(); ships.destroyer.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
-                            playerCompleted = 0;
-                            usedCoords = [];
-                            placedShip = 0;
-                            enemyPlacedVal = 0;
-                            cpuUsedCoords = [];
-                            passedObj = 0;
-                            usedCpuMoves = [];
-                            playerArr = [];
-                            activateShipBtn();
+                            // playerCompleted = 0;
+                            // usedCoords = [];
+                            // placedShip = 0;
+                            // enemyPlacedVal = 0;
+                            // cpuUsedCoords = [];
+                            // passedObj = 0;
+                            // usedCpuMoves = [];
+                            // playerArr = [];
+                            // activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -132,15 +132,15 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.submarine.hit(); ships.submarine.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
-                            playerCompleted = 0;
-                            usedCoords = [];
-                            placedShip = 0;
-                            enemyPlacedVal = 0;
-                            cpuUsedCoords = [];
-                            passedObj = 0;
-                            usedCpuMoves = [];
-                            playerArr = [];
-                            activateShipBtn();
+                            // playerCompleted = 0;
+                            // usedCoords = [];
+                            // placedShip = 0;
+                            // enemyPlacedVal = 0;
+                            // cpuUsedCoords = [];
+                            // passedObj = 0;
+                            // usedCpuMoves = [];
+                            // playerArr = [];
+                            // activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
@@ -153,42 +153,62 @@ const gameBoard = () => {
                     receiveAttack: function () {ships.patroller.hit(); ships.patroller.isSunk();},
                     endGame: function () {
                         if (ships.carrier.sunk === true && ships.battleship.sunk === true && ships.destroyer.sunk === true && ships.submarine.sunk === true && ships.patroller.sunk === true) {
-                            playerCompleted = 0;
-                            usedCoords = [];
-                            placedShip = 0;
-                            enemyPlacedVal = 0;
-                            cpuUsedCoords = [];
-                            passedObj = 0;
-                            usedCpuMoves = [];
-                            playerArr = [];
-                            activateShipBtn();
+                            // playerCompleted = 0;
+                            // usedCoords = [];
+                            // placedShip = 0;
+                            // enemyPlacedVal = 0;
+                            // cpuUsedCoords = [];
+                            // passedObj = 0;
+                            // usedCpuMoves = [];
+                            // playerArr = [];
+                            // activateShipBtn();
                             console.log('all ships sunk');
                         }
                     }
                 }
-                const placeShipBtn = document.getElementById('ships');
-                placeShipBtn.removeEventListener('click', gameBoard);
-                if (playerCompleted === 0) {
-                    player({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
-                }
-                playerCompleted = 1;
                 return {carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard};
+}
+
+
+const startGame = () => {
+    let shipBoards = gameBoard();
+    let carrierBoard = shipBoards.carrierBoard;
+    let battleshipBoard = shipBoards.battleshipBoard;
+    let destroyerBoard = shipBoards.destroyerBoard;
+    let submarineBoard = shipBoards.submarineBoard;
+    let patrollerBoard = shipBoards.patrollerBoard;
+
+    const placeShipBtn = document.getElementById('ships');
+    placeShipBtn.removeEventListener('click', startGame);
+    if (playerCompleted === 0) {
+        player({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
+    }
+    playerCompleted = 1;
 }
 
 const activateShipBtn = () => {
     const placeShipBtn = document.getElementById('ships');
-    placeShipBtn.addEventListener('click', gameBoard);
+    placeShipBtn.addEventListener('click', startGame);
 }
 activateShipBtn();
+
 
 let usedCoords = [];
 let placedShip = 0;
 const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard}) => {
-    document.querySelectorAll('.p1').forEach(box => {
-    box.addEventListener('click', function placePlayerShip() {
-        let firstBox = parseInt(box.id);
+    const direct = document.querySelectorAll('.p1');
+    for (let i = 0; i < direct.length; i++) {
+        direct[i].addEventListener('click', function placePlayerShip() {
+        let firstBox = parseInt(this.id);
         console.log(firstBox);
         let ship = createShip();
+
+        const playerMove = document.querySelectorAll('.p1');
+        for (let j = 0; j < playerMove.length; j++) {
+            playerMove[j].removeEventListener('click', () => {
+                placePlayerShip();
+            });
+        }
 // click new box
 // check if box is occupied by looping through list of used coordinates
 // also need to find a solution to make sure that boxes in the unclicked area aren't filled
@@ -280,9 +300,10 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             placedShip++;
             storePlayerObj({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard});
             enemyShips();
+
         }
-      })
     })
+    }
 }
 
 let enemyPlacedVal = 0;
@@ -325,17 +346,13 @@ const validateEnemyShips = (ship, randomBoxVal) => {
 }
 
 const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]) => {
-     document.querySelectorAll('.p2').forEach(box => {
+     document.querySelectorAll('.p2').forEach(box => { // this is not the issue
          box.addEventListener('click', function runBox() {
              getBox([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box);
              this.removeEventListener('click', runBox); // removes the clicked box eventListener
           })
      })
-
-    // let grid = document.querySelector('.secondGrid');
-    // grid.addEventListener('click', (e) => {
-    //     getBox(e, [carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]);
-    // })
+     // for end of game, do endGame = 1 removeEvent listener for each grid
 }
 
 const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box) => {
@@ -421,6 +438,11 @@ const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
             makeMove();
 }
 
+// enemy board is clicked for player move
+// this triggers the computer move function
+// this gets the Board objects
+// runs cpu function
+
 
 const makeMove = () => {
     // if (passedObj === 0) {
@@ -447,12 +469,12 @@ const storePlayerObj = ({carrierBoard, battleshipBoard, destroyerBoard, submarin
     playerArr.push(carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard);
     console.log(playerArr);
 }
-// fix: default objects always called in
+
 let passedObj = 0;
 let usedCpuMoves = [];
 const cpuMove = () => {
     passedObj = 1;
-    const randomBoxVal = Math.floor(Math.random() * (99 - 0 + 0) + 0);
+    const randomBoxVal = Math.floor(Math.random() * (99 - 0));
     console.log(randomBoxVal);
     console.log(carrierBoard);
     let selectedBox = document.querySelector(`.p1[id='${randomBoxVal}']`);
@@ -541,8 +563,8 @@ const cpuMove = () => {
                 console.log('cpu miss');
                 hitBox.style.backgroundColor = 'red';
         }
-    })
-    selectedBox.click();
+    }, {once: true})
+     selectedBox.click();
 }
 
 
