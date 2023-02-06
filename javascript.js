@@ -335,7 +335,7 @@ const validateEnemyShips = (ship, randomBoxVal) => {
             cpuUsedCoords.push(randomBoxVal + i);
             console.log(cpuUsedCoords);
             let box = document.getElementById(randomBoxVal + i);
-            box.style.backgroundColor = 'black';
+            //box.style.backgroundColor = 'black'; shows enemy ships
             //box.append(ship.coordinates);
         }
         enemyPlacedVal++;
