@@ -536,7 +536,7 @@ const cpuMove = () => {
                 submarineBoard.endGame();
                 hitBox.style.backgroundColor = 'green';
             }
-            else if (selectedBox === cpuUsedCoords[15] || selectedBox === cpuUsedCoords[16]) {
+            else if (selectedBox === usedCoords[15] || selectedBox === usedCoords[16]) {
                 carrierBoard.missed += 1;
                 battleshipBoard.missed += 1;
                 destroyerBoard.missed += 1;
