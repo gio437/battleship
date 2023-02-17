@@ -8,10 +8,10 @@ const createGrid = () => {
         box.classList.add('p1');
         grid.appendChild(box);
     }
-    for (let i = 100; i < 200; i++) {
+    for (let j = 100; j < 200; j++) {
         const secondGrid = document.querySelector('.secondGrid');
         const secondBox = document.createElement('div');
-        secondBox.id = i;
+        secondBox.id = j;
         secondBox.classList.add('p2');
         secondGrid.appendChild(secondBox);
     }
@@ -203,12 +203,6 @@ const player = ({carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
         console.log(firstBox);
         let ship = createShip();
 
-        const playerMove = document.querySelectorAll('.p1');
-        for (let j = 0; j < playerMove.length; j++) {
-            playerMove[j].removeEventListener('click', () => {
-                placePlayerShip();
-            });
-        }
 // click new box
 // check if box is occupied by looping through list of used coordinates
 // also need to find a solution to make sure that boxes in the unclicked area aren't filled
@@ -322,12 +316,13 @@ const enemyShips = () => {
             //ship.coordinates = [];
             validateEnemyShips(shipArr[enemyPlacedVal], randomBoxVal);
         }
-        if (enemyPlacedVal >= 5) {
+        if (enemyPlacedVal === 5) {
+            enemyPlacedVal = 8;
             attackBoard([enemyBoards.carrierBoard, enemyBoards.battleshipBoard, enemyBoards.destroyerBoard, enemyBoards.submarineBoard, enemyBoards.patrollerBoard]);
         }
 }
 
-
+// will continue to validate enemy ship placemant until all are placed, then, will run line 319 which will allow the player to attack enemy board
 const validateEnemyShips = (ship, randomBoxVal) => {
     console.log(ship);
     if (isValidShipSelect(ship, randomBoxVal) && enemyPlacedVal < 5) {
@@ -335,9 +330,8 @@ const validateEnemyShips = (ship, randomBoxVal) => {
             //ship.coordinates.push(randomBoxVal + i);
             cpuUsedCoords.push(randomBoxVal + i);
             console.log(cpuUsedCoords);
-            let box = document.getElementById(randomBoxVal + i);
-            //box.style.backgroundColor = 'black'; shows enemy ships
-            //box.append(ship.coordinates);
+            //  let box = document.getElementById(randomBoxVal + i);
+            //  box.style.backgroundColor = 'black';
         }
         enemyPlacedVal++;
         //console.log(shipArr);
@@ -346,22 +340,26 @@ const validateEnemyShips = (ship, randomBoxVal) => {
     else {enemyShips();}
 }
 
+let turn = 0;
+// attack board is being called multiple times on line 319
 const attackBoard = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard]) => {
-     document.querySelectorAll('.p2').forEach(box => { // this is not the issue
-         box.addEventListener('click', function runBox() {
-             getBox([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box);
-             this.removeEventListener('click', runBox); // removes the clicked box eventListener
+     const enemyBox = document.querySelectorAll('.p2');
+     for (let i = 0; i < enemyBox.length; i++) {
+         enemyBox[i].addEventListener('click', function runBox() {
+             this.removeEventListener('click', runBox);
+             getBox([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], enemyBox[i]);
+             makeMove();
+             turn++;
+             console.log(turn);
           })
-     })
+     }
      // for end of game, do endGame = 1 removeEvent listener for each grid
 }
 
-const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], box) => {
-            //box = e.target;
-            let secondBox = parseInt(box.id);
+const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, patrollerBoard], enemyBox) => {
+            let secondBox = parseInt(enemyBox.id);
             console.log(secondBox);
             console.log(cpuUsedCoords);
-
 
             let hitBox = document.getElementById(secondBox);
             if (secondBox === cpuUsedCoords[0] || secondBox === cpuUsedCoords[1] || secondBox === cpuUsedCoords[2] || secondBox === cpuUsedCoords[3] || secondBox === cpuUsedCoords[4]) {
@@ -436,7 +434,6 @@ const getBox = ([carrierBoard, battleshipBoard, destroyerBoard, submarineBoard, 
                 //return?
                 //box.removeEventListener()
             //}
-            makeMove();
 }
 
 // enemy board is clicked for player move
@@ -479,9 +476,6 @@ const cpuMove = () => {
     console.log(randomBoxVal);
     console.log(carrierBoard);
     let selectedBox = document.querySelector(`.p1[id='${randomBoxVal}']`);
-    selectedBox.addEventListener('click', function clickBox() {
-        console.log(selectedBox);
-        selectedBox.removeEventListener('click', clickBox);
         selectedBox = parseInt(selectedBox.id);
         if (usedCpuMoves.includes(selectedBox)) {
             cpuMove();
@@ -564,8 +558,6 @@ const cpuMove = () => {
                 console.log('cpu miss');
                 hitBox.style.backgroundColor = 'red';
         }
-    }, {once: true})
-     selectedBox.click();
 }
 
 
