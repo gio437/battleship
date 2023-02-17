@@ -21,6 +21,12 @@ body {
     margin-bottom: 2rem;
 }
 
+#gameOver {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
 #alph { /* generate the first row of grid with letters? */
     display: flex;
     gap: 24px;

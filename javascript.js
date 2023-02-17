@@ -59,6 +59,7 @@ const createShip = () => {
 };
 
 let playerCompleted = 0;
+let gameEnded = 0;
 const gameBoard = () => {
             let ships = createShip();
                 let carrierBoard = {
@@ -78,6 +79,14 @@ const gameBoard = () => {
                             // usedCpuMoves = [];
                             // playerArr = [];
                             // activateShipBtn();
+
+                            if (gameEnded === 0) {
+                                gameEnded = 1;
+                                const endDiv = document.getElementById('gameOver');
+                                const endText = document.createElement('div');
+                                endText.textContent = 'Game Over!';
+                                endDiv.appendChild(endText);
+                            }
                             console.log('all ships sunk');
                         }
                     }
@@ -99,6 +108,13 @@ const gameBoard = () => {
                             // usedCpuMoves = [];
                             // playerArr = [];
                             // activateShipBtn();
+                            if (gameEnded === 0) {
+                                gameEnded = 1;
+                                const endDiv = document.getElementById('gameOver');
+                                const endText = document.createElement('div');
+                                endText.textContent = 'Game Over!';
+                                endDiv.appendChild(endText);
+                            }
                             console.log('all ships sunk');
                         }
                     }
@@ -120,6 +136,13 @@ const gameBoard = () => {
                             // usedCpuMoves = [];
                             // playerArr = [];
                             // activateShipBtn();
+                            if (gameEnded === 0) {
+                                gameEnded = 1;
+                                const endDiv = document.getElementById('gameOver');
+                                const endText = document.createElement('div');
+                                endText.textContent = 'Game Over!';
+                                endDiv.appendChild(endText);
+                            }
                             console.log('all ships sunk');
                         }
                     }
@@ -141,6 +164,13 @@ const gameBoard = () => {
                             // usedCpuMoves = [];
                             // playerArr = [];
                             // activateShipBtn();
+                            if (gameEnded === 0) {
+                                gameEnded = 1;
+                                const endDiv = document.getElementById('gameOver');
+                                const endText = document.createElement('div');
+                                endText.textContent = 'Game Over!';
+                                endDiv.appendChild(endText);
+                            }
                             console.log('all ships sunk');
                         }
                     }
@@ -162,6 +192,13 @@ const gameBoard = () => {
                             // usedCpuMoves = [];
                             // playerArr = [];
                             // activateShipBtn();
+                            if (gameEnded === 0) {
+                                gameEnded = 1;
+                                const endDiv = document.getElementById('gameOver');
+                                const endText = document.createElement('div');
+                                endText.textContent = 'Game Over!';
+                                endDiv.appendChild(endText);
+                            }
                             console.log('all ships sunk');
                         }
                     }
@@ -330,8 +367,8 @@ const validateEnemyShips = (ship, randomBoxVal) => {
             //ship.coordinates.push(randomBoxVal + i);
             cpuUsedCoords.push(randomBoxVal + i);
             console.log(cpuUsedCoords);
-            //  let box = document.getElementById(randomBoxVal + i);
-            //  box.style.backgroundColor = 'black';
+            //   let box = document.getElementById(randomBoxVal + i); // allows you to see enemy ships
+            //   box.style.backgroundColor = 'black';
         }
         enemyPlacedVal++;
         //console.log(shipArr);
